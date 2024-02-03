@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+
+<h1>Registrierung</h1>
+
+{% if userExistAllready %}
+<p>Dieser Nutzer existiert bereits!</p>
+{% endif%}
+
+<form method="POST" action="/register/">
+  {% csrf_token %}
+  <div><input name="username" type="text" /></div>
+  <div><input name="email" type="text" /></div>
+  <div><input name="password" type="password" /></div>
+  <div><button>Registierung abschließen</button></div>
+</form>
+
+{% endblock %}

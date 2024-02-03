@@ -1,8 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .models import Message,Chat
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 @login_required(login_url='/login/')
 
@@ -15,7 +16,6 @@ def index(request):
  return render(request, 'chat/index.html',  {"messages" : chatMessages})
 
 
-
 def login_view(request):
    redirect = request.GET.get('next')
    if request.method == 'POST':
@@ -26,3 +26,17 @@ def login_view(request):
       else:
          return render(request,'login/login.html', {'wrongPassword': True, 'redirect':redirect })   
    return render(request,'login/login.html', {'redirect':redirect })
+
+
+def register_view(request):
+    if request.method == 'POST':
+      username = request.POST.get('username')
+      if get_user_model().objects.filter(username=username).exists():
+        return render(request, 'register/register.html', {'userExistAllready' : True})
+      else:     
+        user = User.objects.create_user(
+            username=request.POST.get('username'),
+            email=request.POST.get('email'),
+            password=request.POST.get('password')
+        )   
+    return render(request, 'register/register.html')
