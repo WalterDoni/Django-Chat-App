@@ -7,7 +7,7 @@
 <p>Benutzername oder Passwort ist falsch!</p>
 {% endif %}
 
-<form method="POST" action="/login/">
+<form method="POST" action="/login/?next=/chat/">
     {% csrf_token %}
     <input type="hidden" name="redirect" value="{{ redirect }}">
     <div><input name="username" type="text"></div>

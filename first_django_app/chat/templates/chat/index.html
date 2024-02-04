@@ -22,7 +22,7 @@
     </button>
 </form>
 
-<form action="{% url 'logout' %}" method="post">
+<form action="/login/?next=/chat/" method="post">
     {% csrf_token %}
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit">
         Logout
